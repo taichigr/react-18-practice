@@ -1,6 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { AutoBatchEventHndler } from './components/AutoBatchEventHandler';
+import { AutoBatchOther } from './components/AutoBatchOther';
+import { Transition } from './components/Transition';
+import { ReactQuery } from './components/ReactQuery';
+import { ErrorBoundary } from 'react-error-boundary';
 
 function App() {
   useEffect(() => {
@@ -8,20 +13,17 @@ function App() {
   },[]);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <AutoBatchEventHndler />
+      <AutoBatchOther />
+      <hr />
+      <Transition />
+      <hr />
+      <ErrorBoundary fallback={<p>全体エラー!!!!!!</p>}>
+        <Suspense fallback={<p>全体ローディングLoading!!!!!!</p>}>
+          <ReactQuery />
+        </Suspense>
+      </ErrorBoundary>
+      
     </div>
   );
 }
